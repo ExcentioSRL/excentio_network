@@ -1,0 +1,6 @@
+*ca*-data
+*peer*-data
+*peer*-var
+*orderer*-data
+*cli*-data
+/bin/

@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  staging-tls-ca:
+    container_name: staging-tls-ca
+    image: hyperledger/fabric-ca:latest
+    command: sh -c 'fabric-ca-server start -d -b tls-ca-admin:excentio --port 7052'
+    environment:
+      - FABRIC_CA_SERVER_HOME=/tmp/hyperledger/fabric-ca/crypto
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_CSR_CN=staging-ca-tls
+      - FABRIC_CA_SERVER_CSR_HOSTS=0.0.0.0,docker.datainform.it
+      - FABRIC_CA_SERVER_DEBUG=true
+    ports:
+      - "7052:7052"
+    networks:
+      - excentio-network
+    volumes:
+      - ./staging-tls-ca-data:/tmp/hyperledger/fabric-ca
+
+networks:
+  excentio-network: {}

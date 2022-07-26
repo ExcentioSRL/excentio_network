@@ -1,0 +1,24 @@
+version: "3.7"
+services:
+  present-ecert-ca:
+    container_name: present-ecert-ca
+    image: hyperledger/fabric-ca:latest
+    platform: linux/amd64
+    command: 'fabric-ca-server start -d -b presentecert:excentio --port 7054'
+    stdin_open: true
+    tty: true     
+    environment:
+      - FABRIC_CA_SERVER_HOME=/tmp/hyperledger/fabric-ca/crypto
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_CSR_CN=present-ca-ecert
+      - FABRIC_CA_SERVER_CSR_HOSTS=0.0.0.0,docker.datainform.it
+      - FABRIC_CA_SERVER_DEBUG=true
+    ports:
+      - "7054:7054"
+    networks:
+      - excentio-network
+    volumes:
+      - ./present-ecert-ca-data:/tmp/hyperledger/fabric-ca
+
+networks:
+  excentio-network: {}

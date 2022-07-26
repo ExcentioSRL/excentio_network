@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+  orderer1-present:
+    container_name: orderer1-present
+    image: hyperledger/fabric-orderer:latest
+    environment:
+      - ORDERER_HOME=/tmp/hyperledger/orderer
+      - ORDERER_HOST=orderer1-present
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - FABRIC_CFG_PATH=/tmp/hyperledger/present/orderer
+      - ORDERER_GENERAL_GENESISFILE=/tmp/hyperledger/present/orderer/genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=presentMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/tmp/hyperledger/present/orderer/msp
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/tmp/hyperledger/present/orderer/tls-msp/signcerts/cert.pem
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/tmp/hyperledger/present/orderer/tls-msp/keystore/key.pem
+      - ORDERER_GENERAL_TLS_ROOTCAS=/tmp/hyperledger/present/orderer/tls-msp/tlscacerts/tls-0-0-0-0-7052.pem
+      - ORDERER_GENERAL_LOGLEVEL=debug
+      - ORDERER_DEBUG_BROADCASTTRACEDIR=data/logs
+      - ORDERER_GENERAL_LISTENPORT=7050
+    volumes:
+      - ./present-orderer1-data:/tmp/hyperledger/present/orderer/
+    ports:
+      - 7050:7050
+    networks:
+      - excentio-network
+
+networks:
+  excentio-network: {}

@@ -1,0 +1,31 @@
+version: "3.7"
+services:
+  peer1-excentio:
+    container_name: peer1-excentio
+    image: hyperledger/fabric-peer:latest
+    environment:
+      - CORE_PEER_ID=peer1-excentio
+      - CORE_PEER_ADDRESS=peer1-excentio:7051
+      - CORE_PEER_LOCALMSPID=excentioMSP
+      #- CORE_PEER_MSPCONFIGPATH=/tmp/hyperledger/excentio/peer1/admin/msp
+      - FABRIC_CFG_PATH=/tmp/hyperledger/excentio/peer1/peer
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=guide_fabric-ca
+      - FABRIC_LOGGING_SPEC=debug
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/tmp/hyperledger/excentio/peer1/tls-msp/signcerts/cert.pem
+      - CORE_PEER_TLS_KEY_FILE=/tmp/hyperledger/excentio/peer1/tls-msp/keystore/key.pem
+      - CORE_PEER_TLS_ROOTCERT_FILE=/tmp/hyperledger/excentio/peer1/tls-msp/tlscacerts/tls-0-0-0-0-7052.pem
+      - CORE_PEER_GOSSIP_USELEADERELECTION=true
+      - CORE_PEER_GOSSIP_ORGLEADER=false
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1-excentio:7051
+      - CORE_PEER_GOSSIP_SKIPHANDSHAKE=true
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/excentio/peer1
+    volumes:
+      - ./excentio-peer1-var:/host/var/run
+      - ./excentio-peer1-data:/tmp/hyperledger/excentio/peer1
+    networks:
+      - excentio-network
+
+networks:
+  excentio-network: {}

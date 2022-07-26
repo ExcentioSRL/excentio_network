@@ -1,0 +1,24 @@
+version: "3.7"
+services:
+  datainform-ecert-ca:
+    container_name: datainform-ecert-ca
+    image: hyperledger/fabric-ca:latest
+    platform: linux/amd64
+    command: sh -c 'fabric-ca-server start -d -b datainformecert:excentio --port 7053'
+    stdin_open: true
+    tty: true     
+    environment:
+      - FABRIC_CA_SERVER_HOME=/tmp/hyperledger/fabric-ca/crypto
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_CSR_CN=datainform-ca-ecert
+      - FABRIC_CA_SERVER_CSR_HOSTS=0.0.0.0,docker.datainform.it
+      - FABRIC_CA_SERVER_DEBUG=true
+    ports:
+      - "7053:7053"
+    networks:
+      - excentio-network
+    volumes:
+      - ./datainform-ecert-ca-data:/tmp/hyperledger/fabric-ca
+
+networks:
+  excentio-network: {}

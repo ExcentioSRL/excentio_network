@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  di-cli:
+   container_name: datainform-cli
+   image: hyperledger/fabric-tools:latest
+   platform: linux/amd64
+   tty: true
+   stdin_open: true
+   environment:
+     - GOPATH=/opt/gopath
+     - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+     - FABRIC_LOGGING_SPEC=DEBUG
+     - CORE_PEER_ID=excentio-network-cli
+     - CORE_PEER_ADDRESS=peer1-datainform:7051
+     - CORE_PEER_LOCALMSPID=datainformMSP
+     - FABRIC_CFG_PATH=/tmp/hyperledger/netcli
+     - CORE_PEER_TLS_ENABLED=true
+     - CORE_PEER_TLS_ROOTCERT_FILE=/tmp/hyperledger/netcli/tls-msp/tlscacerts/tls-0-0-0-0-7052.pem
+     #- CORE_PEER_MSPCONFIGPATH=/tmp/hyperledger/present/orderer1/msp
+   working_dir: /opt/gopath/src/github.com/hyperledger/fabric/netcli
+   command: sh
+   volumes:
+     - ./datainform-netcli-data:/tmp/hyperledger/netcli
+   networks:
+     - excentio-network
+networks:
+  excentio-network: {}
