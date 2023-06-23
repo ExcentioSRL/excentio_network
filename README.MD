@@ -1,6 +1,6 @@
 # EXCENTIO NETWORK
 **Sample Hyperledger basic network**
-have a look to the article related: https://www.excentio.com/hyperledger-fabric-testnet/
+have a look to the article related: https://www.excentio.com/articoli/hyperledger-fabric-testnet/
 
 Tools needed:
 
